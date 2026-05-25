@@ -1504,18 +1504,31 @@ fail:
     
     [self _insideComposedCharacterSequences:line position:position block: ^(CGFloat left, CGFloat right, NSUInteger prev, NSUInteger next) {
         if (isVertical) {
-            position = fabs(left - point.y) < fabs(right - point.y) < (right ? prev : next);
-        } else {
-            position = fabs(left - point.x) < fabs(right - point.x) < (right ? prev : next);
-        }
+                CGFloat dl = fabs(left - point.y);
+                CGFloat dr = fabs(right - point.y);
+                BOOL leftCloser = dl < dr;
+                position = leftCloser ? prev : next;
+            } else {
+                CGFloat dl = fabs(left - point.x);
+                CGFloat dr = fabs(right - point.x);
+                BOOL leftCloser = dl < dr;
+                position = leftCloser ? prev : next;
+            }
+    
     }];
     
     [self _insideEmoji:line position:position block: ^(CGFloat left, CGFloat right, NSUInteger prev, NSUInteger next) {
         if (isVertical) {
-            position = fabs(left - point.y) < fabs(right - point.y) < (right ? prev : next);
-        } else {
-            position = fabs(left - point.x) < fabs(right - point.x) < (right ? prev : next);
-        }
+                CGFloat dl = fabs(left - point.y);
+                CGFloat dr = fabs(right - point.y);
+                BOOL leftCloser = dl < dr;
+                position = leftCloser ? prev : next;
+            } else {
+                CGFloat dl = fabs(left - point.x);
+                CGFloat dr = fabs(right - point.x);
+                BOOL leftCloser = dl < dr;
+                position = leftCloser ? prev : next;
+            }
     }];
     
     if (position < _visibleRange.location) position = _visibleRange.location;
